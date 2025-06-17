@@ -1,29 +1,44 @@
 use reqwest::{Client, Error};
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
+use std::collections::HashMap;
 use std::path::PathBuf;
+use failure::Error as RarError;
 
-const NZGAMES: &str = "https://github.com/SanseLGUH/my-cli-scripts/tree-commit-info/main/nz_mini_games_installator/mini_games";
-const RAWCONTENT: &str = "https://raw.githubusercontent.com/SanseLGUH/my-cli-scripts/refs/heads/main/nz_mini_games_installator/mini_games/";
+const NZGAMES: &str = "https://raw.githubusercontent.com/SanseLGUH/my-cli-scripts/refs/heads/main/nz_mini_games_installator/mini_games/metadata.json";
+const RAWCONTENT: &str = "https://raw.githubusercontent.com/SanseLGUH/my-cli-scripts/refs/heads/main/nz_mini_games_installator/mini_games/AMONGUS";
 
-pub async fn games() -> Vec<String> {
+#[derive(Debug, Serialize, Deserialize)]
+pub struct MiniGames {
+	path: String,
+	description: String
+}
+
+pub type MiniGameCollection = HashMap<String, MiniGames>;
+
+pub async fn games() -> Result<MiniGameCollection, Error> {
 	let client = Client::new();
 
-	if let Ok(resp) = client.get(NZGAMES).send().await {
-		println!("{:?}", resp);
+	match client.get(NZGAMES).send().await {
+		Ok(resp) => {
+			Ok( resp.json().await? )
+		}
+		Err(_) => {
+			Ok( HashMap::new() )
+ 		}
 	}
-
-	vec![ String::new() ]
 }
 
-struct Installation {
-	path: PathBuf
-}
+use std::io::Write;
 
-impl Installation {
-	pub async fn install() -> Result<Self, Error> {
-		todo!()
-	} 
+pub async fn install(url: &str, output: &str) -> Result<(), Error> {
+	let bytes = reqwest::get(url).await?.bytes().await?.to_vec();
+	let mut f = std::fs::File::create(output).unwrap();
+	f.write_all(&bytes).unwrap();
 
-	pub fn unpack() {
-	}
+	Ok(())
+} 
+
+pub fn unpack(path: &str, output: &str) -> Result<(), RarError> {
+	let archive = rar::Archive::extract_all( "assets/among.rar", output, "" )?;
+	Ok(())
 }

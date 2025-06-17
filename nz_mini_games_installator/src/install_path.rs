@@ -4,7 +4,6 @@ use dirs::config_dir;
 enum Launcher {
 	// Official, Tlauncher, Tlauncher 
 	DefaultPath,
-	// Prisma, KLauncher, tc 
 	CustomPath
 }
 
