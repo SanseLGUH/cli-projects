@@ -1,29 +1,11 @@
-use std::{io, path::PathBuf};
+use std::path::{Path, PathBuf};
 use dirs::config_dir;
 
-enum Launcher {
-	// Official, Tlauncher, Tlauncher 
-	DefaultPath,
-	CustomPath
-}
+pub fn default_minecraft_path() -> Option<PathBuf> {
+	let default_path = config_dir().unwrap().join(".minecraft");
 
-fn define_launcher() -> Launcher {
-	// let mut entries = fs::read_dir(config_dir().unwrap()).unwrap()
-    //     .map(|res| res.map(|e| e.path()))
-    //     .collect::<Result<Vec<_>, io::Error>>().unwrap();
-
-   	Launcher::DefaultPath
-}
-
-pub fn find() -> PathBuf {
-	match define_launcher() {
-		Launcher::DefaultPath => dot_minecraft(),
-		Launcher::CustomPath => todo!()
-	}
-}
-
-fn dot_minecraft() -> PathBuf {
-	let mut romaning = config_dir().unwrap();
-	romaning.push(".minecraft");
-	romaning
+    match default_path.exists() {
+    	true => Some( default_path ),
+    	false => None
+    }
 }

@@ -1,7 +1,6 @@
 use reqwest::{Client, Error as HttpError};
 use serde::{Serialize, Deserialize};
 use std::collections::HashMap;
-use std::path::PathBuf;
 
 const NZGAMES: &str = "https://raw.githubusercontent.com/SanseLGUH/my-cli-scripts/refs/heads/main/nz_mini_games_installator/mini_games/metadata.json";
 
