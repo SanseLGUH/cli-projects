@@ -1,0 +1,11 @@
+{
+	"SIEGE": {
+		"path": "https://raw.githubusercontent.com/SanseLGUH/my-cli-projects/refs/heads/main/nz_mini_games_installator/mini_games/SIEGE.zip", "description": ""
+	},
+	"SLASHER": {
+		"path": "https://raw.githubusercontent.com/SanseLGUH/my-cli-projects/refs/heads/main/nz_mini_games_installator/mini_games/SLASHER.zip", "description": ""
+	},
+	"VAMPYR": {
+		"path": "https://raw.githubusercontent.com/SanseLGUH/my-cli-projects/refs/heads/main/nz_mini_games_installator/mini_games/VAMPYR.zip", "description": ""
+	}
+}
