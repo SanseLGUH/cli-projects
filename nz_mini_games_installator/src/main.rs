@@ -15,7 +15,8 @@ fn input(prompt: &str) -> String {
 }
 
 async fn installation(minecraft_path: std::path::PathBuf, game_url: &str) {
-    installer::install(game_url, "nz_game.zip").await;
+    let _ = install_path::clear_mods(&minecraft_path);
+    installer::install(game_url, "nz_game.zip").await.expect("Failed to install");
     installer::unpack("nz_game.zip", &minecraft_path.display().to_string()).unwrap();
 }
 
@@ -53,6 +54,8 @@ async fn main() -> io::Result<()> {
                     println!("Игра с таким названием не найдена.");
                 }
             }
+
+            input("Installation Completed");
         }
         None => {
             println!("Не удалось определить путь установки Minecraft.");
