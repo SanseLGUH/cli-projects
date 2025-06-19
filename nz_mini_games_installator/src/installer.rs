@@ -39,6 +39,6 @@ pub fn unpack(path: &str, output: &str) -> std::io::Result<()> {
 	let file = std::fs::File::open(path)?;
 	let mut archive = zip::ZipArchive::new(file)?;
 	archive.extract(&std::path::Path::new(output))?;
-
+	
 	Ok(())
 }
