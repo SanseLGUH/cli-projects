@@ -7,5 +7,15 @@
 	},
 	"VAMPYR": {
 		"path": "https://raw.githubusercontent.com/SanseLGUH/my-cli-projects/refs/heads/main/nz_mini_games_installator/mini_games/VAMPYR.zip", "description": ""
+	},
+	"RAKE": {
+		"path": "https://raw.githubusercontent.com/SanseLGUH/my-cli-projects/refs/heads/main/nz_mini_games_installator/mini_games/RAKE.zip", "description": ""
+	},
+	"AMONGUS": {
+		"path": "https://raw.githubusercontent.com/SanseLGUH/my-cli-projects/refs/heads/main/nz_mini_games_installator/mini_games/AMONGUS.zip", "description": ""
+	},
+	"DECEIT": {
+		"path": "https://raw.githubusercontent.com/SanseLGUH/my-cli-projects/refs/heads/main/nz_mini_games_installator/mini_games/DECEIT.zip", "description": ""
 	}
+	
 }
