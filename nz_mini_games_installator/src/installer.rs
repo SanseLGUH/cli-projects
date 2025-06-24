@@ -1,6 +1,7 @@
 use reqwest::{Client, Error as HttpError};
 use serde::{Serialize, Deserialize};
 use std::collections::HashMap;
+use std::path::PathBuf;
 
 const NZGAMES: &str = "https://raw.githubusercontent.com/SanseLGUH/my-cli-scripts/refs/heads/main/nz_mini_games_installator/mini_games/metadata.json";
 
@@ -35,10 +36,40 @@ pub async fn install(url: &str, output: &str) -> Result<(), HttpError> {
 	Ok(())
 } 
 
-pub fn unpack(path: &str, output: &str) -> std::io::Result<()> {
+pub fn unpack(path: &str, output: &PathBuf) -> std::io::Result<()> {
 	let file = std::fs::File::open(path)?;
 	let mut archive = zip::ZipArchive::new(file)?;
-	archive.extract(&std::path::Path::new(output))?;
+	archive.extract(&output)?;
 	
 	Ok(())
 }
+
+// need to make more "complex" thing
+pub fn backup(path: &PathBuf) -> std::io::Result<()> {
+	let mut mods_path = path.clone();
+	mods_path.push("mods");
+
+  let mut backup_path = path.clone();
+
+  backup_path.push("backup_nazzy_auto");
+
+  if backup_path.exists() {
+      std::fs::remove_dir_all(&backup_path)?;
+  }
+
+	if mods_path.exists() {
+		let size = mods_path.metadata()?.len();
+
+		if size > 0 {
+			std::fs::rename(mods_path, backup_path)?;
+		}
+	}
+
+	Ok(())
+}
+
+
+
+
+
+

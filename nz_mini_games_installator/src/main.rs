@@ -15,11 +15,13 @@ fn input(prompt: &str) -> String {
 }
 
 async fn installation(minecraft_path: std::path::PathBuf, game_url: &str) {
+    installer::backup(&minecraft_path).expect("Failed to create Backup");
+
     let _ = install_path::clear_mods(&minecraft_path);
     installer::install(game_url, "nz_game.zip").await.expect("Failed to install");
 
     println!("Распаковываем файл...");
-    installer::unpack("nz_game.zip", &minecraft_path.display().to_string()).expect("Failed to extract file");
+    installer::unpack("nz_game.zip", &minecraft_path).expect("Failed to extract file");
     let _ = std::fs::remove_file("nz_game.zip");
 }
 
