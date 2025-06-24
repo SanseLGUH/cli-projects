@@ -53,15 +53,20 @@ pub fn backup(path: &PathBuf) -> std::io::Result<()> {
 
   backup_path.push("backup_nazzy_auto");
 
-  if backup_path.exists() {
-      std::fs::remove_dir_all(&backup_path)?;
-  }
-
-	if mods_path.exists() {
+  if mods_path.exists() {
 		let size = mods_path.metadata()?.len();
 
 		if size > 0 {
-			std::fs::rename(mods_path, backup_path)?;
+        if backup_path.exists() || backup_path.metadata()?.len() > 0 {  
+         println!("\n[ {} ] Предыдущая резервная копия будет удалена. Для отмены нажмите Ctrl + C, или нажмите Enter для продолжения.", backup_path.display());
+         
+         let mut pause = String::new();
+         std::io::stdin().read_line(&mut pause).unwrap();
+
+         std::fs::remove_dir_all(&backup_path)?;
+        }
+
+        std::fs::rename(mods_path, backup_path)?;
 		}
 	}
 

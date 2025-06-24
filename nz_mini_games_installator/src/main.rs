@@ -30,7 +30,7 @@ async fn main() -> io::Result<()> {
     match install_path::default_minecraft_path() {
         Some(mut path) => {
             println!("\n[ Путь по умолчанию: {:?} ]", path);
-
+   
             let choice = input("Хотите указать свой путь? (введите 'y' для да): ");
 
             if choice.to_lowercase() == "y" {
@@ -49,7 +49,19 @@ async fn main() -> io::Result<()> {
                     }
                 }
             }
+            
+            let choice = input("Распаковать предустановленную мини-игру? (введите 'y' для Да): ");
 
+            if choice.to_lowercase() == "y" {
+                let custom_path = input("Укажите путь для распаковки: ");
+    
+                installer::backup(&path)?;  // Создаём резервную копию
+                installer::unpack(&custom_path, &path)?;  // Распаковываем в указанный путь
+
+                println!("Распаковка завершена успешно!");
+                return Ok(());
+            }
+    
             let games = installer::games().await.expect("Ошибка при получении списка игр");
 
             println!("\nСписок доступных игр:");
