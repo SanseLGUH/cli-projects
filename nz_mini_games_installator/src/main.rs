@@ -1,27 +1,25 @@
-use std::io;
-
 mod installer;
-mod install_path;
+mod local_utils;
 
 use std::{ io::Write, path::PathBuf };
 use tokio;
 
 fn input(prompt: &str) -> String {
     print!("{}", prompt);
-    io::stdout().flush().unwrap();
+    std::io::stdout().flush().unwrap();
     let mut buf = String::new();
-    io::stdin().read_line(&mut buf).unwrap();
+    std::io::stdin().read_line(&mut buf).unwrap();
     buf.trim().to_string()
 }
 
 async fn installation(minecraft_path: PathBuf, game_url: &str) {
-    installer::backup(&minecraft_path).expect("Failed to create Backup");
+    local_utils::backup(&minecraft_path).expect("Failed to create Backup");
 
-    let _ = install_path::clear_mods(&minecraft_path);
+    let _ = local_utils::clear_configs(&minecraft_path);
     installer::install(game_url, "nz_game.zip").await.expect("Failed to install");
 
     println!("Распаковываем файл...");
-    installer::unpack("nz_game.zip", &minecraft_path).expect("Failed to extract file");
+    local_utils::unpack("nz_game.zip", &minecraft_path).expect("Failed to extract file");
     let _ = std::fs::remove_file("nz_game.zip");
 }
 
@@ -42,8 +40,8 @@ fn custom_path() -> PathBuf {
 }
 
 #[tokio::main]
-async fn main() -> io::Result<()> {
-    let path: PathBuf = match install_path::default_minecraft_path() {
+async fn main() -> std::io::Result<()> {
+    let path: PathBuf = match local_utils::default_minecraft_path() {
         Some(mut path) => {
             println!("\n[ Путь по умолчанию: {:?} ]", path);
 
@@ -62,8 +60,8 @@ async fn main() -> io::Result<()> {
     if input("Распаковать предустановленную мини-игру? (введите 'y' для Да): ").to_lowercase() == "y" {
         let custom_path = input("Укажите путь для распаковки: ");
 
-        installer::backup(&path)?;
-        installer::unpack(&custom_path, &path)?;
+        local_utils::backup(&path)?;
+        local_utils::unpack(&custom_path, &path)?;
 
         println!("Распаковка завершена успешно!");
         return Ok(());
