@@ -11,7 +11,5 @@ pub fn default_minecraft_path() -> Option<PathBuf> {
 }
 
 pub fn clear_mods(path: &PathBuf) -> std::io::Result<()> {
-    let mut pathc = path.clone();
-    pathc.push("mods");
-    remove_dir_all(pathc)
+    remove_dir_all(path.join("mods"))
 }

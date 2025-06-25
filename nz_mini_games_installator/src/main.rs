@@ -3,7 +3,7 @@ use std::io;
 mod installer;
 mod install_path;
 
-use std::io::Write;
+use std::{ io::Write, path::PathBuf };
 use tokio;
 
 fn input(prompt: &str) -> String {
@@ -14,7 +14,7 @@ fn input(prompt: &str) -> String {
     buf.trim().to_string()
 }
 
-async fn installation(minecraft_path: std::path::PathBuf, game_url: &str) {
+async fn installation(minecraft_path: PathBuf, game_url: &str) {
     installer::backup(&minecraft_path).expect("Failed to create Backup");
 
     let _ = install_path::clear_mods(&minecraft_path);
@@ -25,68 +25,66 @@ async fn installation(minecraft_path: std::path::PathBuf, game_url: &str) {
     let _ = std::fs::remove_file("nz_game.zip");
 }
 
+fn custom_path() -> PathBuf { 
+    let custom_path = input("Введите свой путь: ");
+    let custom_path_formated = std::path::Path::new(&custom_path).to_path_buf();
+
+    match custom_path_formated.exists() {
+        true => {
+            println!("Вы указали путь: {}", custom_path);
+            custom_path_formated
+        }
+        false => {
+            println!("Этого путь не существует!");
+            std::process::exit(1);
+        }
+    }
+}
+
 #[tokio::main]
 async fn main() -> io::Result<()> {
-    match install_path::default_minecraft_path() {
+    let path: PathBuf = match install_path::default_minecraft_path() {
         Some(mut path) => {
             println!("\n[ Путь по умолчанию: {:?} ]", path);
-   
-            let choice = input("Хотите указать свой путь? (введите 'y' для да): ");
 
-            if choice.to_lowercase() == "y" {
-                let custom_path = input("Введите свой путь: ");
-                
-                let cp_to_path = std::path::Path::new(&custom_path); 
-
-                match cp_to_path.exists() {
-                    true => {
-                        println!("Вы указали путь: {}", custom_path);        
-                        path = cp_to_path.to_path_buf();
-                    }
-                    false => {
-                        println!("Этого путь не существует!");
-                        std::process::exit(1);
-                    }
-                }
+            if input("Хотите указать свой путь? (введите 'y' для да): ").to_lowercase() == "y" {
+                path = custom_path();
             }
             
-            let choice = input("Распаковать предустановленную мини-игру? (введите 'y' для Да): ");
-
-            if choice.to_lowercase() == "y" {
-                let custom_path = input("Укажите путь для распаковки: ");
-    
-                installer::backup(&path)?;  // Создаём резервную копию
-                installer::unpack(&custom_path, &path)?;  // Распаковываем в указанный путь
-
-                println!("Распаковка завершена успешно!");
-                return Ok(());
-            }
-    
-            let games = installer::games().await.expect("Ошибка при получении списка игр");
-
-            println!("\nСписок доступных игр:");
-            for (name, data) in &games {
-                println!(" - {} :: описание: {}", name, data.description);
-            }
-
-            let game_choice = input("\nВведите название игры из списка: ");
-
-            match games.get(&game_choice) {
-                Some(game) => {
-                    println!("Путь к выбранной игре: {:?}", game.path);
-
-                    installation(path, &game.path).await;
-
-                    input("Установка завершена!");
-                }
-                None => {
-                    println!("Игра с таким названием не найдена.");
-                }
-            }            
+            path
         }
         None => {
             println!("Не удалось определить путь установки Minecraft.");
+            custom_path()
         }
+    };
+
+    if input("Распаковать предустановленную мини-игру? (введите 'y' для Да): ").to_lowercase() == "y" {
+        let custom_path = input("Укажите путь для распаковки: ");
+
+        installer::backup(&path)?;
+        installer::unpack(&custom_path, &path)?;
+
+        println!("Распаковка завершена успешно!");
+        return Ok(());
+    }
+
+    let games = installer::games().await.expect("Ошибка при получении списка игр");
+
+    println!("\nСписок доступных игр:");
+    for (name, data) in &games {
+        println!(" - {} :: описание: {}", name, data.description);
+    }
+
+    let game_choice = input("\nВведите название игры из списка: ");
+
+    match games.get(&game_choice) {
+        Some(game) => {
+            println!("Путь к выбранной игре: {:?}", game.path);
+            installation(path, &game.path).await;
+            input("Установка завершена!");
+        }
+        None => println!("Игра с таким названием не найдена.")
     }
 
     Ok(())
