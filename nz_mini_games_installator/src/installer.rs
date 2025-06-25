@@ -6,8 +6,8 @@ const NZGAMES: &str = "https://raw.githubusercontent.com/SanseLGUH/my-cli-script
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct MiniGames {
-	pub path: String,
-	pub description: String
+    pub path: String,
+    pub description: String
 }
 
 pub type MiniGameCollection = HashMap<String, MiniGames>;
