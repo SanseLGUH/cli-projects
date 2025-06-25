@@ -18,7 +18,7 @@ pub async fn games() -> Result<MiniGameCollection, HttpError> {
     match client.get(NZGAMES).send().await {
         Ok(resp) => Ok( resp.json().await? ),
         Err(_) => Ok( HashMap::new() )
-	  }
+    }
 }
 
 pub async fn install(url: &str, output: &str) -> Result<(), HttpError> {
