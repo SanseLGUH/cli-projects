@@ -22,6 +22,41 @@
 	},
 	"DEBTHUNT": {
 		"path": "https://drive.usercontent.google.com/download?id=183KFh6cIoLQhG20uZkxyx7ap-lFoRcLA&export=download&confirm=t&uuid=57f1f319-cba7-43d0-a3d2-136af895f197", "description": ""
+	},
+	"ESCAPE": {
+		"path": "https://drive.usercontent.google.com/download?id=1e9rz0NNn7eczFDmo_3jFSEM0rqxln23i&export=download&confirm=t&uuid=a55b44d4-8335-408f-8afc-2aedc5d0ee14", "description": ""
+	},
+	"HOTEL": {
+		"path": "https://drive.usercontent.google.com/download?id=1uOyPZueJVCa7Am5AboTCdeh20JVIRbjT&export=download&confirm=t&uuid=59f5c827-c448-4775-8823-e265e379c721", "description": ""
+	},
+	"INFECTED": {
+		"path": "https://drive.usercontent.google.com/download?id=1Qhc1vjPJ_sWKbUGQwT5kkFLO6ZZoeP_G&export=download&confirm=t&uuid=42788c6e-f6a6-43e8-8e72-3ac76aeb9af5", "description": ""
+	},
+	"DEBTHUNT": {
+		"path": "https://drive.usercontent.google.com/download?id=183KFh6cIoLQhG20uZkxyx7ap-lFoRcLA&export=download&confirm=t&uuid=57f1f319-cba7-43d0-a3d2-136af895f197", "description": ""
+	},
+	"LABARATORY": {
+		"path": "https://drive.usercontent.google.com/download?id=1NzgffdbOfkFquzxh-6WqNTVkCBpY9WWZ&export=download&confirm=t&uuid=d39896fd-4670-4bd1-9220-b27639cde92a", "description": ""
+	},
+	"MAZE": {
+		"path": "https://drive.usercontent.google.com/download?id=1Cxx-M2zUfJ3m0HGvTYeWlQ0Qzpfbvg0Z&export=download&confirm=t&uuid=6266e02e-779f-4321-9aba-e07bf63123e5", "description": ""
+	},
+	"MONSTRUM": {
+		"path": "https://drive.usercontent.google.com/download?id=1S-Vx4uN5kIP9vYriLbV3xPuC-SI0N4V9&export=download&confirm=t&uuid=da7a9141-2089-4b28-b93d-cebdf73b45bd", "description": ""
+	},
+	"OPERATION_BLIZZARD": {
+		"path": "https://drive.usercontent.google.com/download?id=1738jyFI9Il95J2Li7ySkJsArDZtBkrCe&export=download&confirm=t&uuid=1c99ea8a-d4cb-450f-a05d-8acc461da62d", "description": ""
+	},
+	"PHASMOPHOBIA_HALLOWEEN": {
+		"path": "https://drive.usercontent.google.com/download?id=13j8Qxpcni7R4b8Uhz_n8qpynPwblhOc3&export=download&confirm=t&uuid=87b48b76-b5a9-4e6b-ba68-469ba07b66a5", "description": ""
+	},
+	"PHASMOPHOBIA": {
+		"path": "https://drive.usercontent.google.com/download?id=17BXJ7aiBKJt-X3SfA-pnyhNkZk_SP1bB&export=download&confirm=t&uuid=efb6549d-3dd7-4c87-932b-61349875183f", "description": ""
+	},
+	"SLASHER_REDWOOD": {
+		"path": "https://drive.usercontent.google.com/download?id=18Gpz696EGgW1zkHZpt76KPGHvT1vemRR&export=download&confirm=t&uuid=7ed1b56b-0c93-47f0-a6fb-57bb55419c1d", "description": ""
+	},
+	"WINTER_DEBTHUNT": {
+		"path": "https://drive.usercontent.google.com/download?id=1mv8hLwACKDuWuaNmhthBTl6Iw09cQavw&export=download&confirm=t&uuid=97c7ba03-cc74-484b-bd0d-ef21894d83b5", "description": ""
 	}
-	
 }
