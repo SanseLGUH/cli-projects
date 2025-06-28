@@ -78,7 +78,7 @@ async fn main() -> std::io::Result<()> {
 
     match games.get(&game_choice) {
         Some(game) => {
-            println!("Путь к выбранной игре: {:?}", game.path);
+            println!("Путь к выбранной игре: {:?} :: установка может занять от 20 до 30 секунд", game.path);
             installation(path, &game.path).await;
             input("Установка завершена!");
         }

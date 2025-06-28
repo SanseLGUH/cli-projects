@@ -3,6 +3,7 @@ use reqwest::{Client, Error as HttpError};
 use serde::{Serialize, Deserialize};
 
 const NZGAMES: &str = "https://raw.githubusercontent.com/SanseLGUH/my-cli-scripts/refs/heads/main/nz_mini_games_installator/mini_games/metadata.json";
+const NZGAMES_VER: &str = "";
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct MiniGames {
@@ -18,7 +19,7 @@ pub async fn games() -> Result<MiniGameCollection, HttpError> {
     match client.get(NZGAMES).send().await {
         Ok(resp) => Ok( resp.json().await? ),
         Err(_) => Ok( HashMap::new() )
-    }
+	  }
 }
 
 pub async fn install(url: &str, output: &str) -> Result<(), HttpError> {
